@@ -10,14 +10,19 @@ int main(void)
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read = getline(&line, &len, stdin);
+	int interactive = isatty(STDIN_FILENO);
 
 	while (1)
 	{
-		write(STDOUT_FILENO, "$ ", 2);
+		if (interactive)
+			write(STDOUT_FILENO, "$ ", 2);
 
 		if (read == -1)
 		{
 			if (feof(stdin))
+			{
+				if (interactive)
+					write(STDOUT_FILENO, "\n", 1);
 				exit(EXIT_SUCCESS);
 			else
 			{
@@ -31,6 +36,9 @@ int main(void)
 			line[read - 1] = '\0';
 			exec_command(line);
 		}
+
+		if (!interactive)
+			break;
 	}
 	free(line);
 	return (0);
