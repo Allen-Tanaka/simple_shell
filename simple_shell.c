@@ -24,6 +24,7 @@ int main(void)
 				if (interactive)
 					write(STDOUT_FILENO, "\n", 1);
 				exit(EXIT_SUCCESS);
+			}
 			else
 			{
 				perror("getline");
