@@ -8,7 +8,7 @@
 #include <sys/wait.h>
 
 /* Prototypes */
-int execute_command(char *cmd);
+int exec_command(char *cmd);
 
 
 #endif
