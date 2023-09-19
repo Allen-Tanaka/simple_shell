@@ -29,7 +29,7 @@ int main(void)
 		if (read > 1)
 		{
 			line[read - 1] = '\0';
-			execute_command(line);
+			exec_command(line);
 		}
 	}
 	free(line);
