@@ -9,20 +9,24 @@
 int exec_command(char *cmd)
 {
 	pid_t pid = fork();
-	int status;
-	char *argv[2];
+	int status, i = 0;
+	char *argv[4], *token = strtok(cmd, " ");
 
-	argv[0] = cmd;
-	argv[1] = NULL;
+	while (token != NULL)
+	{
+		argv[i++] = token;
+		token = strtok(NULL, " ");
+	}
+	argv[i] = NULL;
 
 	if (pid == 0)
 	{
 		if (execve(argv[0], argv, NULL) == -1)
-			perror("simple_shell");
+			perror("./shell");
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
-		perror("simple_shell");
+		perror("./shell");
 	else
 	{
 		do
