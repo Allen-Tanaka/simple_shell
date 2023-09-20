@@ -62,5 +62,9 @@ void non_interactive_mode(void)
  */
 void process_input(char *line)
 {
+	if (is_exit_command(line))
+	{
+		exit(EXIT_SUCCESS);
+	}
 	exec_command(line);
 }
