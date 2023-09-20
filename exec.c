@@ -10,7 +10,7 @@ int exec_command(char *cmd)
 {
 	pid_t pid = fork();
 	int status, i = 0;
-	char *argv[100]*token = strtok(cmd, " ");
+	char *argv[100], *token = strtok(cmd, " ");
 
 	while (token != NULL)
 	{
@@ -18,7 +18,7 @@ int exec_command(char *cmd)
 		token = strtok(NULL, " ");
 	}
 	argv[i] = NULL;
-	
+
 	if (pid == 0)
 	{
 		if (execve(argv[0], argv, NULL) == -1)
