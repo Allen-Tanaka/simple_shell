@@ -8,7 +8,7 @@
 
 int exec_command(char *cmd)
 {
-	pid_t pid = fork(), wpid;
+	pid_t pid = fork();
 	int status;
 	char *argv[2];
 
@@ -26,7 +26,7 @@ int exec_command(char *cmd)
 	else
 	{
 		do
-			wpid = waitpid(pid, &status, WUNTRACED);
+			waitpid(pid, &status, WUNTRACED);
 		while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 	return (0);
