@@ -11,6 +11,7 @@ int exec_command(char *cmd)
 	pid_t pid = fork();
 	int status, i = 0;
 	char *argv[100], *token = strtok(cmd, " ");
+	struct stat st;
 
 	while (token != NULL)
 	{
