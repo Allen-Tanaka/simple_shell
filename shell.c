@@ -6,49 +6,61 @@
  */
 int main(void)
 {
+	if (isatty(STDIN_FILENO))
+		interactive_mode();
+	else
+		non_interactive_mode();
+	return (0);
+}
+
+/**
+ * interactive_mode - handles shell in interactive mode.
+ */
+void interactive_mode(void)
+{
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
 
-	if (isatty(STDIN_FILENO))
+	while (1)
 	{
-		while (1)
-		{
-			write(STDOUT_FILENO, "#cisfun$ ", 9);
-			read = getline(&line, &len, stdin);
-
-			if (read == -1)
-			{
-				free(line);
-				if (feof(stdin))
-				{
-					write(STDOUT_FILENO, "\n", 1);
-					exit(EXIT_SUCCESS);
-				}
-				else
-				{
-					perror("shell");
-					exit(EXIT_FAILURE);
-				}
-			}
-			if (read > 1)
-			{
-				line[read - 1] = '\0';
-				exec_command(line);
-			}
-		}
-	}
-	else
-	{
+		write(STDOUT_FILENO, "#cisfun$ ", 9);
 		read = getline(&line, &len, stdin);
 
+		if (read == -1)
+			break;
 		if (read > 1)
 		{
 			line[read - 1] = '\0';
-			exec_command(line);
+			process_input(line);
 		}
-		free(line);
-		write(STDOUT_FILENO, "#cisfun$ ", 9);
 	}
-	return (0);
+	free(line);
+}
+
+/**
+ * non_interactive_mode - shell in non_interactive_mode
+ */
+void non_interactive_mode(void)
+{
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t read;
+
+	read = getline(&line, &len, stdin);
+	if (read > 1)
+	{
+		line[read - 1] = '\0';
+		process_input(line);
+	}
+	free(line);
+}
+
+/**
+ * process_input - Processes the user's input string for execution
+ * @line: The command to be processed.
+ */
+void process_input(char *line)
+{
+	exec_command(line);
 }
