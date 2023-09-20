@@ -13,7 +13,7 @@ int main(void)
 
 	while (1)
 	{
-		write(STDOUT_FILENO, "$ ", 2);
+		write(STDOUT_FILENO, "#cisfun$ ", 9);
 
 		read = getline(&line, &len, stdin);
 
@@ -21,11 +21,13 @@ int main(void)
 		{
 			if (feof(stdin))
 			{
+				free(line);
 				exit(EXIT_SUCCESS);
 			}
 			else
 			{
 				perror("getline");
+				free(line);
 				exit(EXIT_FAILURE);
 			}
 		}
