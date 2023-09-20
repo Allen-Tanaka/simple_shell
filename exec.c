@@ -15,6 +15,12 @@ int exec_command(char *cmd)
 	parse_arguments(cmd, argv);
 	path_cmd = find_command_in_path(argv[0]);
 
+	if (path_cmd == NULL)
+	{
+		perror("./shell");
+		return (-1);
+	}
+
 	if (pid == 0)
 	{
 		if (execve(argv[0], argv, NULL) == -1)
@@ -31,5 +37,6 @@ int exec_command(char *cmd)
 			waitpid(pid, &status, WUNTRACED);
 		while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
+	free(path_cmd);
 	return (0);
 }
