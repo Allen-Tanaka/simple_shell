@@ -17,5 +17,6 @@ void process_input(char *line);
 void parse_arguments(char *cmd, char **argv);
 char *find_command_in_path(char *cmd);
 int is_exit_command(const char *cmd);
+void print_env(char **environ);
 
 #endif
