@@ -7,36 +7,40 @@
 
 int main(void)
 {
-	char *line = NULL;
+	char *line = NULL, *argv[];
+	int argc;
 	size_t len = 0;
 	ssize_t read;
-
-	while (1)
+	
+	if (argc == 1)
 	{
-		write(STDOUT_FILENO, "#cisfun$ ", 9);
-
-		read = getline(&line, &len, stdin);
-
-		if (read == -1)
+		while (1)
 		{
-			if (feof(stdin))
+			write(STDOUT_FILENO, "#cisfun$ ", 9);
+
+			read = getline(&line, &len, stdin);
+
+			if (read == -1)
 			{
 				free(line);
-				exit(EXIT_SUCCESS);
+				if (feof(stdin))
+					exit(EXIT_SUCCESS);
+				else
+				{
+					perror("getline");
+					exit(EXIT_FAILURE);
+				}
 			}
-			else
-			{
-				perror("getline");
-				free(line);
-				exit(EXIT_FAILURE);
-			}
-		}
 
-		if (read > 1)
-		{
-			line[read - 1] = '\0';
-			exec_command(line);
+			if (read > 1)
+			{
+				line[read - 1] = '\0';
+				exec_command(line);
+			}
 		}
 	}
+	else
+		exec_command(argv[1]);
+	free(line);
 	return (0);
 }
