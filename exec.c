@@ -10,9 +10,10 @@ int exec_command(char *cmd)
 {
 	pid_t pid = fork();
 	int status;
-	char *argv[100];
+	char *argv[100], *path_cmd;
 
 	parse_arguments(cmd, argv);
+	path_cmd = find_command_in_path(argv[0]);
 
 	if (pid == 0)
 	{
