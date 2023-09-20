@@ -30,7 +30,9 @@ int exec_command(char *cmd)
 	else
 	{
 		do
+		{
 			waitpid(pid, &status, WUNTRACED);
+		}
 		while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 	return (0);
