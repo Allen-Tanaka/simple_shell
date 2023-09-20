@@ -5,13 +5,13 @@
  * Return: 0 on success, 1 on failure
  */
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
 	
-	if (argc == 1)
+	if (isatty(STDIN_FILENO))
 	{
 		while (1)
 		{
@@ -23,10 +23,13 @@ int main(int argc, char *argv[])
 			{
 				free(line);
 				if (feof(stdin))
+				{
+					write(STDOUT_FILENO, "\n", 1);
 					exit(EXIT_SUCCESS);
+				}
 				else
 				{
-					perror("getline");
+					perror("shell");
 					exit(EXIT_FAILURE);
 				}
 			}
@@ -39,7 +42,16 @@ int main(int argc, char *argv[])
 		}
 	}
 	else
-		exec_command(argv[1]);
-	free(line);
+	{
+		read = getline(&line, &len, stdin);
+
+		if (read > 1)
+		{
+			line[read - 1] = '\0';
+			exec_command(line);
+		}
+		free(line);
+		write(STDOUT_FILENO, "#cisfun$ ", 9);
+	}
 	return (0);
 }
