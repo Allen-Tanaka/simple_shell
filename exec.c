@@ -11,9 +11,9 @@ int exec_command(char *cmd)
 	pid_t pid = fork();
 	int status;
 	char *argv[100];
-	
+
 	parse_arguments(cmd, argv);
-	
+
 	if (pid == 0)
 	{
 		if (execve(argv[0], argv, NULL) == -1)
