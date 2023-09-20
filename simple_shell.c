@@ -38,6 +38,5 @@ int main(void)
 			exec_command(line);
 		}
 	}
-	free(line);
 	return (0);
 }
