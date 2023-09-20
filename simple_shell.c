@@ -5,10 +5,9 @@
  * Return: 0 on success, 1 on failure
  */
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	char *line = NULL, *argv[];
-	int argc;
+	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
 	

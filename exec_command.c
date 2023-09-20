@@ -22,8 +22,10 @@ int exec_command(char *cmd)
 	if (pid == 0)
 	{
 		if (execve(argv[0], argv, NULL) == -1)
+		{
 			perror("./shell");
-		exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
+		}
 	}
 	else if (pid < 0)
 		perror("./shell");
