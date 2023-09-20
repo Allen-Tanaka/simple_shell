@@ -9,18 +9,16 @@
 int exec_command(char *cmd)
 {
 	pid_t pid = fork();
-	int status;
-	char *argv[100], *path_cmd;
+	int status, i = 0;
+	char *argv[100]*token = strtok(cmd, " ");
 
-	parse_arguments(cmd, argv);
-	path_cmd = find_command_in_path(argv[0]);
-
-	if (path_cmd == NULL)
+	while (token != NULL)
 	{
-		perror("./shell");
-		return (-1);
+		argv[i++] = token;
+		token = strtok(NULL, " ");
 	}
-
+	argv[i] = NULL;
+	
 	if (pid == 0)
 	{
 		if (execve(argv[0], argv, NULL) == -1)
@@ -37,6 +35,5 @@ int exec_command(char *cmd)
 			waitpid(pid, &status, WUNTRACED);
 		while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-	free(path_cmd);
 	return (0);
 }
