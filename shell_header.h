@@ -16,5 +16,6 @@ void non_interactive_mode(void);
 void process_input(char *line);
 void parse_arguments(char *cmd, char **argv);
 char *find_command_in_path(char *cmd);
+int is_exit_command(const char *cmd);
 
 #endif
