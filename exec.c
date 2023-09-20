@@ -14,27 +14,31 @@ int exec_command(char *cmd)
 
 	while (token != NULL)
 	{
-		argv[i] = token;
-		i++;
+		argv[i++] = token;
 		token = strtok(NULL, " ");
 	}
 	argv[i] = NULL;
 
-	if (pid == 0)
+	if (stat(argv[0], &st) == 0 && (st.st_mode & S_IXUSR))
 	{
-		if (execve(argv[0], argv, NULL) == -1)
+		if (pid == 0)
 		{
+			if (execve(argv[0], argv, NULL) == -1)
+			{
+				perror("./shell");
+				exit(EXIT_FAILURE);
+			}
+		}
+		else if (pid < 0)
 			perror("./shell");
-			exit(EXIT_FAILURE);
+		else
+		{
+			do
+				waitpid(pid, &status, WUNTRACED);
+			while (!WIFEXITED(status) && !WIFSIGNALED(status));
 		}
 	}
-	else if (pid < 0)
-		perror("./shell");
 	else
-	{
-		do
-			waitpid(pid, &status, WUNTRACED);
-		while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
+		write(STDERR_FILENO, "./shell: No such file or directory\n", 35);
 	return (0);
 }
