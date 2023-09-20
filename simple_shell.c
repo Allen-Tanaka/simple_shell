@@ -4,29 +4,28 @@
  * main - Entry point for the shell
  * Return: 0 on success, 1 on failure
  */
-i
+
 int main(void)
 {
 	char *line = NULL;
 	size_t len = 0;
-	ssize_t read = getline(&line, &len, stdin);
+	ssize_t read;
 
 	while (1)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 
+		read = getline(&line, &len, stdin);
+
 		if (read == -1)
 		{
 			if (feof(stdin))
 			{
-				write(STDOUT_FILENO, "\n", 1);
-				free(line);
 				exit(EXIT_SUCCESS);
 			}
 			else
 			{
 				perror("getline");
-				free(line);
 				exit(EXIT_FAILURE);
 			}
 		}
