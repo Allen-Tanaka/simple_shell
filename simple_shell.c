@@ -23,11 +23,13 @@ int main(void)
 			{
 				if (interactive)
 					write(STDOUT_FILENO, "\n", 1);
+				free(line);
 				exit(EXIT_SUCCESS);
 			}
 			else
 			{
 				perror("getline");
+				free(line);
 				exit(EXIT_FAILURE);
 			}
 		}
