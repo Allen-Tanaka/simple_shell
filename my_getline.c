@@ -1,7 +1,5 @@
 #include "shell_header.h"
 
-#define BUFFER_SIZE 4096
-
 /**
  * refill_buffer - Refills the buffer from standard input
  * @buffer: buffer to fill
