@@ -57,7 +57,7 @@ ssize_t my_getline(char **line, size_t *n)
 	{
 		if (characters_left == 0 && refill_buffer(buffer, &characters_left,
 					&buffer_ptr) <= 0)
-			return (total_read ? total_read : -1);
+			return (total_read ? (ssize_t) total_read : (ssize_t) -1);
 
 		if (total_read >= *n - 1)
 		{
