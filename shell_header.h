@@ -18,6 +18,6 @@ void parse_arguments(char *cmd, char **argv);
 char *find_command_in_path(char *cmd);
 int is_exit_command(const char *cmd);
 void print_env(char **environ);
-ssize_t my_getline(char **line, size_t *n);
+ssize_t my_getline1(char **line, size_t *n);
 
 #endif
