@@ -8,5 +8,14 @@
  */
 int is_exit_command(const char *cmd)
 {
-	return (strcmp(cmd, "exit") == 0);
+	const char *exit_cmd = "exit";
+
+	while (*cmd && *exit_cmd)
+	{
+		if (*cmd != *exit_cmd)
+			return (0);
+		cmd++;
+		exit_cmd++;
+	}
+	return (!(*cmd) && !(*exit_cmd));
 }
