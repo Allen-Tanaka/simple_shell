@@ -9,7 +9,7 @@
 char *get_command_path(char *cmd)
 {
 	char *PATH = getenv("PATH");
-	char *dir, *save_ptr, *full_path;
+	char *dir, *save_ptr, *full_path = NULL;
 	size_t dir_len, cmd_len;
 	char *temp = full_path;
 
