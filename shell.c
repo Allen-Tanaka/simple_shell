@@ -25,7 +25,7 @@ void interactive_mode(void)
 	while (1)
 	{
 		write(STDOUT_FILENO, "#cisfun$ ", 9);
-		read = my_getline1(&line, &len);
+		read = my_getline(&line, &len);
 
 		if (read == -1)
 			break;
@@ -47,7 +47,7 @@ void non_interactive_mode(void)
 	size_t len = 0;
 	ssize_t read;
 
-	read = my_getline1(&line, &len);
+	read = my_getline(&line, &len);
 	if (read > 1)
 	{
 		line[read - 1] = '\0';
