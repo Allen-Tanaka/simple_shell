@@ -10,7 +10,6 @@ char *get_command_path(char *cmd)
 {
 	char *PATH = getenv("PATH");
 	char *dir, *save_ptr, *full_path;
-	struct stat st;
 	size_t dir_len, cmd_len;
 	char *temp = full_path;
 
