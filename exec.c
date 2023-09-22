@@ -9,8 +9,8 @@
 int exec_command(char *cmd)
 {
 	pid_t pid = fork();
-	int status, i = 0;
-	char *argv[100], *token = strtok(cmd, " ");
+	int status, i = 0, error_msg_len = 0;
+	char *argv[100], *error_msg, *token = strtok(cmd, " ");
 
 	while (token != NULL)
 	{
@@ -18,6 +18,16 @@ int exec_command(char *cmd)
 		token = strtok(NULL, " ");
 	}
 	argv[i] = NULL;
+
+	if (argv[0][0] != '/')
+	{
+		error_msg = "./shell: command not found\n";
+
+		while (error_msg[error_msg_len])
+			error_msg_len++;
+		write(STDERR_FILENO, error_msg, error_msg_len);
+		return (-1);
+	}
 
 	if (pid == 0)
 	{
