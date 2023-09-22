@@ -19,5 +19,7 @@ char *find_command_in_path(char *cmd);
 int is_exit_command(const char *cmd);
 void print_env(char **environ);
 ssize_t my_getline(char **line, size_t *n);
+char *get_command_path(char *cmd);
+size_t custom_strlen(const char *str);
 
 #endif
