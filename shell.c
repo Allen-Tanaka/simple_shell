@@ -69,14 +69,3 @@ void process_input(char *line)
 	}
 	exec_command(line);
 }
-
-/**
- * is_exit_command - Check if the given command is "exit"
- * @cmd: The command string
- *
- * Return: 1 if the command is "exit", otherwise 0.
- */
-int is_exit_command(const char *cmd)
-{
-	return (strcmp(cmd, "exit") == 0);
-}
